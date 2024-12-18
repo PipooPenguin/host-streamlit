@@ -67,8 +67,8 @@ def app():
 
             # Kiểm tra dữ liệu
             if "Ma hoa don" not in df.columns or "Ma hang" not in df.columns:
-                st.markdown(
-                    "<p class='error'>Tệp tin cần có các cột: 'Ma hoa don' và 'Ma hang'.</p>", unsafe_allow_html=True)
+                st.error(
+                    "Tệp tin cần có các cột: 'Ma hoa don' và 'Ma hang'.")
             else:
                 st.write("**Dữ liệu đã tải lên:**")
 
@@ -199,3 +199,5 @@ def app():
 
         except Exception as e:
             st.error(f"Đã có lỗi xảy ra: {e}")
+    else:
+        st.success("✨ Vui lòng tải file CSV để tiếp tục! ✨")

@@ -238,5 +238,5 @@ def app():
                 plt.colorbar(label='Cluster')
                 st.pyplot(plt)
     else:
-        # Nếu chưa tải lên file
-        st.warning("Vui lòng tải file CSV để tiếp tục.")
+        st.success("✨ Vui lòng tải file CSV để tiếp tục! ✨")
+

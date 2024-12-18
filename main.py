@@ -45,7 +45,7 @@ THIS_DIR = Path(__file__).parent
 # Hiển thị header
 st.set_page_config(page_title="Đồ án Data Mining", page_icon="🎁")
 title = "IS252.P11 - Datamining"
-st.markdown(f"<h1 style='text-align: center; color: #FFB703;'>{title}</h1>", unsafe_allow_html=True)
+st.markdown(f"<h1 style='text-align: center; color: #003e1f;'>{title}</h1>", unsafe_allow_html=True)
 
 # Tạo navigation bar bằng cách sử dụng Streamlit
 selected_tab = st.selectbox("Điều Hướng", [

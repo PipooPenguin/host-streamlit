@@ -293,3 +293,5 @@ def app():
                         st.write(rule)
                 else:
                     st.write("Không tìm thấy rút gọn.")
+    else:
+        st.success("✨ Vui lòng tải file CSV để tiếp tục! ✨")

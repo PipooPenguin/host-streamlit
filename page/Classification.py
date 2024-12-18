@@ -120,3 +120,5 @@ def app():
             }
             if st.button("Dự đoán"):
                 classify_sample(data, method, features)
+    else:
+        st.success("✨ Vui lòng tải file CSV để tiếp tục! ✨")
