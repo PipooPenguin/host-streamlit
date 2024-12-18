@@ -1,51 +1,19 @@
 import streamlit as st
 from page import Classification, Cluster, FregItemset, Reduct, Preprocess
 from pathlib import Path
+from assets.table.Dataframe_to_Table import draw_table
 
 THIS_DIR = Path(__file__).parent
-# CSS tùy chỉnh để làm đẹp giao diện
-# st.markdown(
-#     """
-#     <style>
-#         /* Tổng thể nền */
-#         body {
-#             background: radial-gradient(circle at top, #126782, #000000);
-#             color: white;
-#             font-family: Arial, sans-serif;
-#         }
-#         /* Navigation bar */
-#         .nav-container {
-#             display: flex;
-#             justify-content: space-around;
-#             background: linear-gradient(90deg, #126782, #219EBC);
-#             padding: 10px;
-#             border-radius: 10px;
-#             margin: 20px auto;
-#             width: 80%;
-#         }
-#         .nav-link {
-#             color: white;
-#             font-size: 18px;
-#             font-weight: bold;
-#             text-decoration: none;
-#             padding: 10px 20px;
-#             border-radius: 5px;
-#             cursor: pointer;
-#             transition: background 0.3s ease;
-#         }
-#         .nav-link:hover, .nav-active {
-#             background: #FFB703;
-#             color: black;
-#         }
-#     </style>
-#     """,
-#     unsafe_allow_html=True
-# )
+TABLE_CSS = THIS_DIR / "assets" / "table" / "table.css"
 
-# Hiển thị header
+# Hiển thị
 st.set_page_config(page_title="Đồ án Data Mining", page_icon="🎁")
 title = "IS252.P11 - Datamining"
-st.markdown(f"<h1 style='text-align: center; color: #003e1f;'>{title}</h1>", unsafe_allow_html=True)
+st.markdown(f"<h1 style='text-align: center; color: #70161e;'>{title}</h1>", unsafe_allow_html=True)
+
+
+
+
 
 # Tạo navigation bar bằng cách sử dụng Streamlit
 selected_tab = st.selectbox("Điều Hướng", [
@@ -56,6 +24,11 @@ selected_tab = st.selectbox("Điều Hướng", [
     "Phân lớp",
     "Gom cụm"
 ])
+if TABLE_CSS.exists():
+    with open(TABLE_CSS, encoding="utf-8") as f:
+        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+else:
+    st.warning("CSS file not found!")
 
 # Gọi hàm tương ứng dựa trên tab được chọn
 if selected_tab == "Phân lớp":
@@ -70,7 +43,6 @@ elif selected_tab == "Tiền xử lý dữ liệu":
     Preprocess.app()
 else:
     st.success("✨ Chọn một tính năng từ menu để bắt đầu! ✨")
-
 hide_st_style = """
             <style>
             #MainMenu {visibility: hidden;}

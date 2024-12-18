@@ -1,0 +1,42 @@
+.data-table-container {
+            display: flex;
+            justify-content: center; /* Căn giữa bảng */
+            align-items: center;
+            margin: 20px auto; /* Căn giữa bảng */
+            max-width: 100%; /* Giới hạn chiều rộng */
+
+}
+.data-table {
+    border-collapse: collapse;
+    font-size: 14px; /* Kích thước chữ */
+    font-family: Arial, sans-serif;
+    width: 100%; /* Chiếm toàn bộ chiều rộng khung */
+    text-align: center;
+    border: 1px solid #ddd; /* Viền bảng */
+    color: #023047;
+}
+
+.data-table th {
+    background-color: #3B1C32; /* Màu nền tiêu đề */
+    color: #FFFFFF; /* Màu chữ tiêu đề */
+    padding: 10px;
+    text-align: center;
+}
+
+.data-table td {
+    padding: 8px 10px;
+    text-align: center;
+}
+
+.data-table tr:nth-child(even) {
+    background-color: #f3f3f3; /* Màu nền dòng chẵn */
+}
+
+.data-table tr:nth-child(odd) {
+    background-color: #ffffff; /* Màu nền dòng lẻ */
+}
+
+.data-table tr:hover {
+    background-color: #8ECAE6; /* Màu nền khi hover */
+    color: #000000; /* Màu chữ khi hover */
+}

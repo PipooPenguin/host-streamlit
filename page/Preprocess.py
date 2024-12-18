@@ -2,55 +2,8 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler, OneHotEncoder
+from assets.table.Dataframe_to_Table import draw_table
 
-# CSS tùy chỉnh để làm đẹp giao diện
-# CSS tùy chỉnh cho bảng Dữ liệu đã tải lên
-custom_data_table_css = """
-    <style>
-        .data-table-container {
-            display: flex;
-            justify-content: center; /* Căn giữa bảng */
-            align-items: center;
-            margin: 20px auto; /* Căn giữa bảng */
-            max-width: 100%; /* Giới hạn chiều rộng */
-            
-        }
-        .data-table {
-            border-collapse: collapse;
-            font-size: 14px; /* Kích thước chữ */
-            font-family: Arial, sans-serif;
-            width: 100%; /* Chiếm toàn bộ chiều rộng khung */
-            text-align: center;
-            border: 1px solid #ddd; /* Viền bảng */
-            color: #023047;
-        }
-
-        .data-table th {
-            background-color: #3B1C32; /* Màu nền tiêu đề */
-            color: #FFFFFF; /* Màu chữ tiêu đề */
-            padding: 10px;
-            text-align: center;
-        }
-
-        .data-table td {
-            padding: 8px 10px;
-            text-align: center;
-        }
-
-        .data-table tr:nth-child(even) {
-            background-color: #f3f3f3; /* Màu nền dòng chẵn */
-        }
-
-        .data-table tr:nth-child(odd) {
-            background-color: #ffffff; /* Màu nền dòng lẻ */
-        }
-
-        .data-table tr:hover {
-            background-color: #8ECAE6; /* Màu nền khi hover */
-            color: #000000; /* Màu chữ khi hover */
-        }
-    </style>
-"""
 
 # Hàm xử lý dữ liệu
 def identify_data_types(df):
@@ -83,7 +36,7 @@ def fill_missing_values(df):
 
 
 
-    craw_table(df)
+    draw_table(df)
     return df
 
 def binning_and_smoothing(df, column):
@@ -95,27 +48,11 @@ def binning_and_smoothing(df, column):
     smoothing_values = df.groupby("Binned_" + column)[column].mean()
     df["Smoothed_" + column] = df["Binned_" + column].map(smoothing_values)
                     # Chuyển DataFrame thành HTML với class để hiển thị bảng
-    data_html = df[[column, "Binned_" + column, "Smoothed_" + column]].to_html(
-        index=False,
-        classes='data-table',  # Thêm class để áp dụng CSS
-        border=0
-    )
-    # Hiển thị CSS và bảng HTML
-    st.markdown(custom_data_table_css, unsafe_allow_html=True)
-    st.markdown(
-        f'<div class="data-table-container">{data_html}</div>', unsafe_allow_html=True)
+    draw_table(df[[column, "Binned_" + column, "Smoothed_" + column]])
     return df
 
-def craw_table(df):
-    data_html = df.to_html(
-        index=False,
-        classes='data-table',  # Thêm class để áp dụng CSS
-        border=0
-    )
-    # Hiển thị CSS và bảng HTML
-    with st.container(height=500, border=0):
-        st.markdown(
-            f'<div class="data-table-container">{data_html}</div>', unsafe_allow_html=True)
+
+
 
 def discretize_column(df, column):
     st.markdown("<div class='step-title'>Rời rạc hóa thuộc tính</div>", unsafe_allow_html=True)
@@ -123,7 +60,7 @@ def discretize_column(df, column):
     labels = [f"Group {i+1}" for i in range(bins)]
     df["Discretized_" + column] = pd.cut(df[column], bins=bins, labels=labels)
 
-    craw_table(df[[column, "Discretized_" + column]])
+    draw_table(df[[column, "Discretized_" + column]])
     return df
 
 def one_hot_encoding(df, column):
@@ -132,18 +69,8 @@ def one_hot_encoding(df, column):
     encoded = encoder.fit_transform(df[[column]])
     encoded_df = pd.DataFrame(encoded, columns=encoder.get_feature_names_out([column]))
     df = pd.concat([df, encoded_df], axis=1)
-    
-    st.dataframe(df, use_container_width=True)
-    # Chuyển DataFrame thành HTML với class để hiển thị bảng
-    # data_html = df.to_html(
-    #     index=False,
-    #     classes='data-table',  # Thêm class để áp dụng CSS
-    #     border=0
-    # )
-    # # Hiển thị CSS và bảng HTML
-    # st.markdown(custom_data_table_css, unsafe_allow_html=True)
-    # st.markdown(
-    #     f'<div class="data-table-container">{data_html}</div>', unsafe_allow_html=True)
+
+    draw_table(df)
     return df
 
 def min_max_normalization(df, column):
@@ -152,7 +79,7 @@ def min_max_normalization(df, column):
     df[column + "_Normalized"] = scaler.fit_transform(df[[column]])
 
     # Chuyển DataFrame thành HTML với class để hiển thị bảng
-    craw_table(df[[column, column + "_Normalized"]])
+    draw_table(df[[column, column + "_Normalized"]])
     return df
 
 
@@ -164,11 +91,11 @@ def app():
 
     if uploaded_file:
         df = pd.read_csv(uploaded_file)
+        st.info("Dữ liệu đã tải lên:")
 
-                # Chuyển DataFrame thành HTML với class để hiển thị bảng
-        st.markdown(custom_data_table_css, unsafe_allow_html=True)
-
-        craw_table(df)
+        # Chuyển DataFrame thành HTML với class để hiển thị bảng
+        # st.markdown(custom_data_table_css, unsafe_allow_html=True)
+        draw_table(df)
         # Button to trigger the dialog
 
         st.subheader("2️⃣. Xử lý dữ liệu")
@@ -205,6 +132,7 @@ def app():
         # Tải xuống dữ liệu đã xử lý
         st.subheader("3️⃣. Tải xuống dữ liệu đã xử lý")
         processed_csv = df.to_csv(index=False).encode("utf-8-sig")
-        st.download_button("Tải file CSV", data=processed_csv, file_name="processed_data.csv", mime="text/csv")
+        if st.download_button("Tải file CSV", data=processed_csv, file_name="processed_data.csv", mime="text/csv"):
+            st.toast('Tải xuống thành công!', icon='😍')
     else:
-        st.success("✨ Vui lòng tải file CSV để tiếp tục! ✨")
+        st.warning("✨ Vui lòng tải file CSV để tiếp tục! ✨")
