@@ -5,6 +5,7 @@
     margin: 20px auto; /* Căn giữa bảng */
     max-width: 100%; /* Giới hạn chiều rộng */
     overflow-x: auto; /* Thêm cuộn ngang nếu bảng quá rộng */
+    border-radius: 10%;
             }
 .data-table {
     border-collapse: collapse;
