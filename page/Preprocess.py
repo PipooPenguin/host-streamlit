@@ -65,7 +65,7 @@ def discretize_column(df, column):
 
 def one_hot_encoding(df, column):
     st.markdown("<div class='step-title'>One-hot Encoding cho thuộc tính</div>", unsafe_allow_html=True)
-    encoder = OneHotEncoder(sparse=False)
+    encoder = OneHotEncoder(sparse_output=False)
     encoded = encoder.fit_transform(df[[column]])
     encoded_df = pd.DataFrame(encoded, columns=encoder.get_feature_names_out([column]))
     df = pd.concat([df, encoded_df], axis=1)

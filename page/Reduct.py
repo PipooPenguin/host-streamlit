@@ -14,9 +14,13 @@ def app():
             df = pd.read_csv(uploaded_file)
 
             # Hiển thị bảng dữ liệu trên giao diện
-            with st.container(border=1):
-                st.info("Dữ liệu đã tải lên:")
-                draw_table(df,long_table=0)
+            required_columns = {"Troi", "Gio", "Apsuat", "Ketqua"}
+            if not required_columns.issubset(df.columns):
+                st.error(f"Tệp tin cần có các cột: {', '.join(required_columns)}.")
+            else:
+                with st.container():
+                    st.info("Dữ liệu đã tải lên:")
+                    draw_table(df, long_table=0)
             # st.dataframe(df, use_container_width=True)
         except Exception as e:
             st.error(f"Lỗi khi đọc file: {e}")

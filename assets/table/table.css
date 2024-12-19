@@ -1,16 +1,17 @@
 .data-table-container {
-            display: flex;
-            justify-content: center; /* Căn giữa bảng */
-            align-items: center;
-            margin: 20px auto; /* Căn giữa bảng */
-            max-width: 100%; /* Giới hạn chiều rộng */
-
+    display: flex;
+    justify-content: flex-start; /* Đảm bảo bảng bắt đầu từ đầu */
+    align-items: flex-start;
+    margin: 0; /* Loại bỏ margin */
+    overflow-x: visible; /* Bật thanh cuộn ngang */
+    width: 100%; /* Chiếm toàn bộ chiều rộng */
 }
+
 .data-table {
     border-collapse: collapse;
     font-size: 14px; /* Kích thước chữ */
     font-family: Arial, sans-serif;
-    width: 100%; /* Chiếm toàn bộ chiều rộng khung */
+    min-width: 100%; /* Đảm bảo bảng đủ rộng để có thể cuộn */
     text-align: center;
     border: 1px solid #ddd; /* Viền bảng */
     color: #023047;
@@ -21,11 +22,15 @@
     color: #FFFFFF; /* Màu chữ tiêu đề */
     padding: 10px;
     text-align: center;
+    position: sticky; /* Để cố định tiêu đề */
+    top: 0;
+    z-index: 2;
 }
 
 .data-table td {
     padding: 8px 10px;
     text-align: center;
+    position: relative;
 }
 
 .data-table tr:nth-child(even) {
