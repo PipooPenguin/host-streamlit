@@ -55,9 +55,10 @@ def app():
     st.subheader("1️⃣. Chọn tệp tin:")
     uploaded_file = st.file_uploader("Tải file dữ liệu (CSV):", type=["csv"])
     if uploaded_file:
-        data = pd.read_csv(uploaded_file)
-        st.info("Dữ liệu đã tải lên:")
-        draw_table(data)
+        with st.container(border=1):
+            data = pd.read_csv(uploaded_file)
+            st.info("Dữ liệu đã tải lên:")
+            draw_table(data)
 
         # Vẽ cây quyết định
         st.subheader("2️⃣. Vẽ cây quyết định:")

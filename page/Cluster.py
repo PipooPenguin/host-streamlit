@@ -8,6 +8,10 @@ from sklearn.cluster import KMeans
 from minisom import MiniSom
 import numpy as np
 import matplotlib.pyplot as plt
+
+from assets.table.Dataframe_to_Table import draw_table
+
+
 # from assets.table.Dataframe_to_Table import draw_table
 
 def app():
@@ -18,18 +22,9 @@ def app():
         # Nếu file đã được tải lên
         data = pd.read_csv(uploaded_file, sep=';')
     # CSS tùy chỉnh cho bảng Dữ liệu đã tải lên
-        st.info("Dữ liệu đã tải lên:")
-
-        # Chuyển DataFrame thành HTML với class để hiển thị bảng
-        data_html = data.to_html(
-            index=False,
-            classes='data-table',  # Thêm class để áp dụng CSS
-            border=0
-        )
-        # Hiển thị CSS và bảng HTML
-        with st.container(border=0):
-            st.markdown(
-                f'<div class="data-table-container">{data_html}</div>', unsafe_allow_html=True)
+        with st.container(border=1):
+            st.info("Dữ liệu đã tải lên:")
+            draw_table(data,long_table=0)
         st.subheader("2️⃣. Chọn thuật toán gom cụm:")
 
         # Chọn thuật toán
@@ -56,15 +51,9 @@ def app():
 
                     # Chuyển đổi dataframe thành HTML với class
 
-                    data_html = data.to_html(
-                        index=False,
-                        classes='data-table',  # Thêm class để áp dụng CSS
-                        border=0
-                    )
-                    # Hiển thị CSS và bảng HTML
-                    with st.container(border=0):
-                        st.markdown(
-                            f'<div class="data-table-container">{data_html}</div>', unsafe_allow_html=True)
+
+                    draw_table(data, long_table=0)
+
                     # Hiển thị Vector trọng tâm dưới dạng bảng
 
                     st.info("✨ **Vector trọng tâm:**")
@@ -77,15 +66,8 @@ def app():
                     centroids_df = pd.DataFrame(centroids, columns=["x", "y"])
                     centroids_df.insert(0, 'Trọng tâm các cụm', [ f'Cụm {i+1}' for i in range(len(centroids_df))])
 
-                    data_html = centroids_df.to_html(
-                        index=False,
-                        classes='data-table',  # Thêm class để áp dụng CSS
-                        border=0
-                    )
-                    # Hiển thị CSS và bảng HTML
-                    with st.container(border=0):
-                        st.markdown(
-                            f'<div class="data-table-container">{data_html}</div>', unsafe_allow_html=True)
+                    draw_table(centroids_df, long_table=0)
+
                     # Hiển thị biểu đồ K-means
                     st.info("✨ **Biểu đồ K-means:**")
                     plt.figure(figsize=(8, 6))
@@ -127,17 +109,9 @@ def app():
                     st.info("✨ **Kết quả Kohonen:**")
                     # Chuyển đổi dữ liệu thành HTML bảng với CSS tùy chỉnh
 
-                    # Chuyển đổi dataframe thành HTML với class
-                    data_html = data.to_html(
-                        index=False,
-                        classes='data-table',  # Thêm class để áp dụng CSS
-                        border=0
-                    )
-                    # Hiển thị CSS và bảng HTML
-                    with st.container(border=0):
-                        st.markdown(
-                            f'<div class="data-table-container">{data_html}</div>', unsafe_allow_html=True)
-                # Tiêu đề bảng
+                    draw_table(data, long_table=0)
+
+                    # Tiêu đề bảng
                     st.info("✨ **Trọng số các nút:**")
 
                     # Lấy trọng số từ SOM và chuyển thành DataFrame
@@ -149,16 +123,8 @@ def app():
                         ]
                     )
 
-                    # Tạo bảng HTML từ DataFrame
-                    data_html = weights_df.to_html(
-                        index=False,
-                        classes='data-table',  # Thêm class để áp dụng CSS
-                        border=0
-                    )
-                    # Hiển thị CSS và bảng HTML
-                    with st.container(border=0):
-                        st.markdown(
-                            f'<div class="data-table-container">{data_html}</div>', unsafe_allow_html=True)
+                    draw_table(weights_df, long_table=0)
+
                     # Hiển thị nhận xét
                     st.success("""
                     Chú thích:

@@ -91,11 +91,9 @@ def app():
 
     if uploaded_file:
         df = pd.read_csv(uploaded_file)
-        st.info("Dữ liệu đã tải lên:")
-
-        # Chuyển DataFrame thành HTML với class để hiển thị bảng
-        # st.markdown(custom_data_table_css, unsafe_allow_html=True)
-        draw_table(df)
+        with st.container(border=1):
+            st.info("Dữ liệu đã tải lên:")
+            draw_table(df)
         # Button to trigger the dialog
 
         st.subheader("2️⃣. Xử lý dữ liệu")

@@ -14,8 +14,9 @@ def app():
             df = pd.read_csv(uploaded_file)
 
             # Hiển thị bảng dữ liệu trên giao diện
-            st.info("Dữ liệu đã tải lên:")
-            draw_table(df)
+            with st.container(border=1):
+                st.info("Dữ liệu đã tải lên:")
+                draw_table(df,long_table=0)
             # st.dataframe(df, use_container_width=True)
         except Exception as e:
             st.error(f"Lỗi khi đọc file: {e}")
@@ -112,7 +113,7 @@ def app():
                     upper_count, upper_set = approximation_upper(
                         df, selected_attributes, decision_value)
                     with st.container(border=1):
-                        st.markdown("✨ **:blue[Kết quả:]**")
+                        st.markdown("✨ **Kết quả:**")
                         st.info(f"**Xấp xỉ dưới:** {lower_count}  -  **tập giá trị:** {set(lower_set)}")
                         st.info(f"**Xấp xỉ trên:** {upper_count}  -  **tập giá trị:** {set(upper_set)}")
 

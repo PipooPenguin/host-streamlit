@@ -24,9 +24,10 @@ def app():
                 st.error(
                     "Tệp tin cần có các cột: 'Ma hoa don' và 'Ma hang'.")
             else:
-                st.info("Dữ liệu đã tải lên:")
+                with st.container(border=1):
+                    st.info("Dữ liệu đã tải lên:")
 
-                draw_table(df)
+                    draw_table(df)
 
                 # Chọn cách tính muốn thực hiện
                 st.subheader("2️⃣. Chọn cách tính muốn thực hiện:")
